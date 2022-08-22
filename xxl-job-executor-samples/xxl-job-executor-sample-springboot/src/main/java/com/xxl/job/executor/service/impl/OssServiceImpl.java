@@ -97,9 +97,10 @@ public class OssServiceImpl implements OssService {
     }
 
     @Override
-    @Transactional
+    @Async
     public String uploadObject(String objectName, InputStream inputStream) {
         try {
+            System.out.println(Thread.currentThread().getName());
             OSS ossClient = new OSSClientBuilder().build(endPoint,accessKeyId,accessKeySecret);
             PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, objectName, inputStream);
             ossClient.putObject(putObjectRequest);
