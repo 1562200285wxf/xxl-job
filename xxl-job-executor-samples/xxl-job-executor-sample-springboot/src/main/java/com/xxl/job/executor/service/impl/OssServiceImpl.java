@@ -34,7 +34,7 @@ public class OssServiceImpl implements OssService {
     private static String bucketName = "telegram01";
 
     private static Map<String,String> cacheMap = new HashMap<>();
-    private static int effectiveTime = 3600;
+    private static int effectiveTime = 36000;
 
 
     @Override
@@ -99,7 +99,6 @@ public class OssServiceImpl implements OssService {
     @Override
     @Transactional
     public String uploadObject(String objectName, InputStream inputStream) {
-        Map<String,String> stringMap = new HashMap<>();
         try {
             OSS ossClient = new OSSClientBuilder().build(endPoint,accessKeyId,accessKeySecret);
             PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, objectName, inputStream);
@@ -108,8 +107,6 @@ public class OssServiceImpl implements OssService {
             Date expiration = new Date(new Date().getTime() + effectiveTime);
             request.setExpiration(expiration);
             String url = ossClient.generatePresignedUrl(request).toString();
-
-            stringMap.put(ConstantStatus.UPLOAD_SUCCESS,url);
             return url;
         }catch (OSSException oe){
         }finally {
