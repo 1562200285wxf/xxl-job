@@ -16,4 +16,6 @@ public interface OssService {
     * 上传文件并返回下载链接
     * */
     public String uploadObject(String objectName, File file);
+
+    public String uploadObject(String objectName, InputStream inputStream);
 }

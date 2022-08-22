@@ -26,7 +26,7 @@ public class SftpUploadUtil {
     private static Integer port = 22;//端口号
     private static int sftpSoTimeout = 1000;
 
-    public static ChannelSftp sftpConnect(DownloadParameterDto downloadParameterDto) {
+    public static ChannelSftp sftpConnect() {
         try {
             logger.info("==========即将连接SFTP==========");
             JSch jsch = new JSch();
@@ -49,6 +49,11 @@ public class SftpUploadUtil {
         return null;
     }
 
+    public static void main(String[] args) {
+        ChannelSftp channelSftp = SftpUploadUtil.sftpConnect();
+        ChannelSftp channelSftp1 = SftpUploadUtil.sftpConnect();
+        SftpUploadUtil.downloadAndUpload(channelSftp,channelSftp1,"/data/1.txt","/data/oss/","1.txt");
+    }
     public static void closeRemoteConnection(ChannelSftp sftpClient) {
         try {
             if (sftpClient != null) {
@@ -119,22 +124,6 @@ public class SftpUploadUtil {
         }
     }
 
-    public static void renameBySuffix(ChannelSftp sFtpClient, String path, String suffix) {
-        try {
-            sFtpClient.cd(path);
-            Vector<ChannelSftp.LsEntry> entries = sFtpClient.ls(path);
-            for (ChannelSftp.LsEntry entry : entries) {
-                String remoteFileName = entry.getFilename();
-                boolean b = remoteFileName.endsWith(suffix);
-                if (b) {
-                    String newFileName = remoteFileName.substring(0, remoteFileName.length() - suffix.length());
-                    sFtpClient.rename(remoteFileName, newFileName);
-                    logger.debug("修改文件名成功,{} 改为 {}", remoteFileName, newFileName);
-                }
-            }
-        } catch (Exception e) {
-        }
-    }
 
     /**
      * 从sftp获取文件上传到新sftp

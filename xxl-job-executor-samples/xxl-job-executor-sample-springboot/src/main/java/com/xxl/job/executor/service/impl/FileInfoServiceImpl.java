@@ -1,6 +1,9 @@
 package com.xxl.job.executor.service.impl;
 
+import com.jcraft.jsch.ChannelSftp;
+import com.jcraft.jsch.SftpException;
 import com.xxl.job.executor.common.util.ConstantStatus;
+import com.xxl.job.executor.common.util.SftpUploadUtil;
 import com.xxl.job.executor.domain.po.FileInfo;
 import com.xxl.job.executor.mapper.FileInfoMapper;
 import com.xxl.job.executor.service.FileInfoService;
@@ -11,6 +14,7 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.io.File;
+import java.io.InputStream;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -21,6 +25,8 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Service
 public class FileInfoServiceImpl implements FileInfoService {
+
+    public static String OSS_PATH_PRE = "oss/";
 
     @Resource
     FileInfoMapper fileInfoMapper;
@@ -33,9 +39,15 @@ public class FileInfoServiceImpl implements FileInfoService {
 
         List<FileInfo> fileInfoList = fileInfoMapper.selectFileInfoByDate(startDate,endDate);
         for (FileInfo fileInfo : fileInfoList) {
-            File file = new File(fileInfo.getRealPath());
-            String objectName = "oss/"+fileInfo.getFileName();
-            String url = ossService.uploadObject(objectName,file);
+            String url = null;
+            ChannelSftp channelSftp = SftpUploadUtil.sftpConnect();
+            try {
+                InputStream inputStream = channelSftp.get(fileInfo.getRealPath());
+                String objectName = OSS_PATH_PRE+fileInfo.getFileName();
+                url = ossService.uploadObject(objectName,inputStream);
+            } catch (SftpException e) {
+                e.printStackTrace();
+            }
             if(!Objects.isNull(url)){
                 FileInfo updateDto = new FileInfo();
                 updateDto.setSerialsNo(fileInfo.getSerialsNo());

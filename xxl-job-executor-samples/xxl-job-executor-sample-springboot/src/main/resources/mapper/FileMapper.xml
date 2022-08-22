@@ -8,12 +8,12 @@
         from file_info
         <where>
             del_flag = 0
-            <if test="startDate!=null and startDate!=''">
+          <!--  <if test="startDate!=null and startDate!=''">
                 and DATE_FORMAT(create_date,'%Y-%m-%d %h:%m:%s') >=DATE_FORMAT(#{startDate},'%Y-%m-%d %h:%m:%s')
             </if>
             <if test="endDate!=null and endDate!=''">
-                and DATE_FORMAT(#{endDate},'%Y-%m-%d ') >= DATE_FORMAT(create_date,'%Y-%m-%d %h:%m:%s')
-            </if>
+                and DATE_FORMAT(#{endDate},'%Y-%m-%d %h:%m:%s') >= DATE_FORMAT(create_date,'%Y-%m-%d %h:%m:%s')
+            </if>-->
 
         </where>
     </select>

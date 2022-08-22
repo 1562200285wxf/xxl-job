@@ -73,8 +73,6 @@ public class OssServiceImpl implements OssService {
 
 
     @Override
-    @Transactional
-    @Async(value = "threadPoolTaskExecutor")
     public String uploadObject(String objectName, File file) {
         Map<String,String> stringMap = new HashMap<>();
         try {
@@ -97,6 +95,36 @@ public class OssServiceImpl implements OssService {
         }
         return null;
     }
+
+    @Override
+    @Transactional
+    public String uploadObject(String objectName, InputStream inputStream) {
+        Map<String,String> stringMap = new HashMap<>();
+        try {
+            OSS ossClient = new OSSClientBuilder().build(endPoint,accessKeyId,accessKeySecret);
+            PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, objectName, inputStream);
+            ossClient.putObject(putObjectRequest);
+            GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(bucketName, objectName, HttpMethod.GET);
+            Date expiration = new Date(new Date().getTime() + effectiveTime);
+            request.setExpiration(expiration);
+            String url = ossClient.generatePresignedUrl(request).toString();
+
+            stringMap.put(ConstantStatus.UPLOAD_SUCCESS,url);
+            return url;
+        }catch (OSSException oe){
+        }finally {
+            try {
+                inputStream.close();
+            }catch (IOException e){
+
+            }
+            if (ossClient != null) {
+                ossClient.shutdown();
+            }
+        }
+        return null;
+    }
+
 
     public static void main(String[] args) throws FileNotFoundException {
         OssServiceImpl ossService = new OssServiceImpl();
