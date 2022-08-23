@@ -12,6 +12,7 @@ import com.xxl.job.executor.common.util.Base64Util;
 import com.xxl.job.executor.common.util.ConstantStatus;
 import com.xxl.job.executor.service.OssService;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,7 @@ import java.io.*;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 /**
  * @author ：wang xiaofeng
@@ -98,7 +100,7 @@ public class OssServiceImpl implements OssService {
 
     @Override
     @Async
-    public String uploadObject(String objectName, InputStream inputStream) {
+    public Future<String> uploadObject(String objectName, InputStream inputStream) {
         try {
             System.out.println(Thread.currentThread().getName());
             OSS ossClient = new OSSClientBuilder().build(endPoint,accessKeyId,accessKeySecret);
@@ -108,7 +110,7 @@ public class OssServiceImpl implements OssService {
             Date expiration = new Date(new Date().getTime() + effectiveTime);
             request.setExpiration(expiration);
             String url = ossClient.generatePresignedUrl(request).toString();
-            return url;
+            return new AsyncResult<>(url);
         }catch (OSSException oe){
         }finally {
             try {

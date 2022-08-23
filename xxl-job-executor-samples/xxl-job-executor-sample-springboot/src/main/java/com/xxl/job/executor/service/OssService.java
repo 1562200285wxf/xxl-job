@@ -3,6 +3,7 @@ package com.xxl.job.executor.service;
 import java.io.File;
 import java.io.InputStream;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 public interface OssService {
 
@@ -17,5 +18,5 @@ public interface OssService {
     * */
     public String uploadObject(String objectName, File file);
 
-    public String uploadObject(String objectName, InputStream inputStream);
+    public Future<String> uploadObject(String objectName, InputStream inputStream);
 }

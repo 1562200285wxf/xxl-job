@@ -17,6 +17,8 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 /**
  * @author ：wang xiaofeng
@@ -39,20 +41,23 @@ public class FileInfoServiceImpl implements FileInfoService {
 
         List<FileInfo> fileInfoList = fileInfoMapper.selectFileInfoByDate(startDate,endDate);
         for (FileInfo fileInfo : fileInfoList) {
-            String url = null;
+            Future<String> result = null;
             ChannelSftp channelSftp = SftpUploadUtil.sftpConnect();
             try {
                 InputStream inputStream = channelSftp.get(fileInfo.getRealPath());
                 String objectName = OSS_PATH_PRE+fileInfo.getFileName();
-                url = ossService.uploadObject(objectName,inputStream);
+                result = ossService.uploadObject(objectName,inputStream);
             } catch (SftpException e) {
                 e.printStackTrace();
             }
-            if(!Objects.isNull(url)){
+            if(!Objects.isNull(result)){
                 FileInfo updateDto = new FileInfo();
                 updateDto.setSerialsNo(fileInfo.getSerialsNo());
                 updateDto.setModifyDate(new Date());
-                updateDto.setOssPath(url);
+                try {
+                    updateDto.setOssPath(result.get());
+                }catch (Exception e){
+                }
                 fileInfoMapper.updateById(updateDto);
             }
         }
