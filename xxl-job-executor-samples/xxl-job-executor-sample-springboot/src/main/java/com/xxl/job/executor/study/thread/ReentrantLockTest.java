@@ -1,13 +1,25 @@
 package com.xxl.job.executor.study.thread;
 
+import java.util.concurrent.atomic.LongAdder;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * @author ：wang xiaofeng
  * @date ：Created in 2022-08-23 16:51
- * @description：
+ * @description：可重入锁测试
  */
-public class Test {
+public class ReentrantLockTest {
     public static void main(String[] args) {
-        Test test = new Test();
+
+        new Thread(new ReentrantLockTest()::t1).start();
+
+        new ReentrantLock(true);
+
+        LongAdder longAdder = new LongAdder();
+        longAdder.increment();
+        Lock lock = new ReentrantLock();
+        ReentrantLockTest test = new ReentrantLockTest();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -15,7 +27,7 @@ public class Test {
             }
         },"thread1").start();
 
-        Test test1 = new Test();
+        ReentrantLockTest test1 = new ReentrantLockTest();
         new Thread(new Runnable() {
             @Override
             public void run() {
