@@ -2,6 +2,9 @@ package com.xxl.job.executor.study.thread;
 
 import javafx.application.Application;
 
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Executor;
+
 /**
  * @author ：wang xiaofeng
  * @date ：Created in 2022-08-26 0:00
@@ -10,6 +13,7 @@ import javafx.application.Application;
 public class ThreadLocalTest {
 
     public static void main(String[] args) {
+        String name = "212";
         ThreadLocal<Apple> threadLocal = new ThreadLocal<>();
         new Thread(() ->{
             try {
@@ -32,6 +36,8 @@ public class ThreadLocalTest {
     }
 
     static class Apple{
+
+
         Apple(String type){
             name = type;
         }
