@@ -1,52 +1,37 @@
-package com.xxl.job.executor.study;
+import re
+n = int(input())
+        sentence = []
+        while 1:
+        s = input()
+        if s != "":
+        sentence.append(s)
+        else:
+        break
+        def is_num_leq_letter(pwd):
+        num  = len(re.findall(r"\d",pwd))
+        w = len(re.findall(r"[a-zA-Z]",pwd))
+        if num<w:
+        return True
+        else:
+        return False
+        def five_continue(pwd):
+        num  = len(re.findall(r"[a-zA-Z]{5,}",pwd))
+        if num>0:
+        return True
+        else:
+        return False
 
-import java.util.Scanner;
+        def isContinuousChar(pwd):
+        num  = len(re.findall(r"([a-zA-Z]|[0-9])\1",pwd))
+        if num>0:
+        return True
+        else:
+        return False
 
-/**
- * @author ：wang xiaofeng
- * @date ：Created in 2022-08-27 17:16
- * @description：
- */
-public class test {
+        for s in sentence:
+        if len(s)>=6 and is_num_leq_letter(s) and not five_continue(s) and not isContinuousChar(s):
+        print('YES')
+        else:
+        print('NO')
+        print()
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        String str = sc.nextLine();
-        int sourceLength = Integer.valueOf(str.split(" ")[0]);
-        int targetLength = Integer.valueOf(str.split(" ")[1]);
-        String source = sc.nextLine();
-        String target = sc.nextLine();
-        System.out.println(strStr1(source,target,sourceLength,targetLength));
-    }
-
-    public static int strStr1(String source, String target,int sourceLength,int targetLength){
-        String[] str1 = source.split("");
-        String[] str2 = target.split("");
-        int index = 0;
-        int count = 0;
-        while (index<sourceLength){
-            count = count+judge(str1,str2,index,targetLength);
-            index++;
-        }
-        return count;
-    }
-
-    public static int judge(String[] str1 ,String[] str2,int sourceIndex,int targetLength){
-        int index = 0;
-        while (index<targetLength){
-            if(!str2[index].equals("*") && !str1[sourceIndex].equals(str2[index])){
-                return 0;
-            }else {
-                if(index != targetLength-1){
-                    index++;
-                    sourceIndex++;
-                }else {
-                    if (str2[index].equals("*") || str1[sourceIndex].equals(str2[index])) {
-                        return 1;
-                    } else return 0;
-                }
-            }
-        }
-        return 0;
-    }
-}
