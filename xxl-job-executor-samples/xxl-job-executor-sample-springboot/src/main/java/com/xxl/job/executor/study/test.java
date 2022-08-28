@@ -13,7 +13,11 @@ public class test {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String str = sc.nextLine();
-
+        int index = Integer.valueOf(str);
+        for (int i = 0; i < index; i++) {
+            String str1 = sc.nextLine();
+            System.out.println(ttt(str1));
+        }
 
     }
     public static String ttt(String numbers){
@@ -52,7 +56,7 @@ public class test {
         int middle = index++;
         set.add(strs[index]);
         if(set.contains(strs[index++])){
-            return strs[index++]
+            return strs[index++];
         }else {
             set.add(strs[index++]);
         }
