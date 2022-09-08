@@ -12,7 +12,6 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
  * 线程池配置
  *
  * @author wangxiaofeng
- * @date Created in 2022/3/15 16:23
  */
 @Configuration
 @Slf4j
@@ -20,22 +19,22 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 public class ThreadPoolConfig {
 
     //按照CPU核数的一般设置
-    @Value("${asyncThreadPool.corePoolSize:8}")
+    @Value("${asyncThreadPool.corePoolSize:2}")
     private int corePoolSize;
 
     //按照核数的两倍设置--在高峰阶段尽可能压榨CPU
-    @Value("${asyncThreadPool.maxPoolSize:32}")
+    @Value("${asyncThreadPool.maxPoolSize:4}")
     private int maxPoolSize;
 
-    @Value("${asyncThreadPool.queueCapacity:20}")
+    @Value("${asyncThreadPool.queueCapacity:2}")
     private int queueCapacity;
 
     //一般设置为一分钟
     @Value("${asyncThreadPool.keepAliveSeconds:60}")
     private int keepAliveSeconds;
 
-    @Value("${asyncThreadPool.awaitTerminationSeconds:5}")
-    private int awaitTerminationSeconds;
+//    @Value("${asyncThreadPool.awaitTerminationSeconds:5}")
+//    private int awaitTerminationSeconds;
 
     @Value("${asyncThreadPool.threadNamePrefix:thread----->}")
     private String threadNamePrefix;
@@ -57,7 +56,7 @@ public class ThreadPoolConfig {
         // 活跃时间---
         threadPoolTaskExecutor.setKeepAliveSeconds(keepAliveSeconds);
         // 主线程等待子线程执行时间---也有可能是拒绝策略
-        threadPoolTaskExecutor.setAwaitTerminationSeconds(awaitTerminationSeconds);
+//        threadPoolTaskExecutor.setAwaitTerminationSeconds(awaitTerminationSeconds);
         // 线程名字前缀
         threadPoolTaskExecutor.setThreadNamePrefix(threadNamePrefix);
         // 自定义拒绝策略
