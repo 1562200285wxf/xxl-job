@@ -14,14 +14,15 @@ public class ReentrantLockTest {
 
         new Thread(new ReentrantLockTest()::t1).start();
 
-        new ReentrantLock(true);
 
         LongAdder longAdder = new LongAdder();
         longAdder.increment();
         Lock lock = new ReentrantLock();
+
         ReentrantLockTest test = new ReentrantLockTest();
         new Thread(new Runnable() {
             @Override
+
             public void run() {
                 test.t1();
             }

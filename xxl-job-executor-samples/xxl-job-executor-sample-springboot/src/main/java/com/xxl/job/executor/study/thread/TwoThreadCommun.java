@@ -12,12 +12,6 @@ import java.util.Set;
 public class TwoThreadCommun {
 
     volatile static Set<Object> set = new HashSet<>();
-    public void add(Object o){
-        set.add(o);
-    }
-    public int size(){
-        return set.size();
-    }
 
     public static void main(String[] args) {
         final Object lock = new Object();
