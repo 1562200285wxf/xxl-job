@@ -12,7 +12,7 @@ public class XxlJobExecutorApplication {
 
 	public static void main(String[] args) {
 		ConfigurableListableBeanFactory configurableListableBeanFactory = SpringApplication.run(XxlJobExecutorApplication.class, args).getBeanFactory();
-
+		System.out.println("test");
 
 	}
 
