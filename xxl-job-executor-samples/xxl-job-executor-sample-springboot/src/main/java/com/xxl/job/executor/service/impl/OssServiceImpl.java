@@ -11,6 +11,7 @@ import com.aliyun.oss.model.PutObjectRequest;
 import com.xxl.job.executor.common.util.Base64Util;
 import com.xxl.job.executor.common.util.ConstantStatus;
 import com.xxl.job.executor.service.OssService;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;

@@ -16,7 +16,7 @@ import java.util.Random;
 
 public class FinalShellDecodeUtil {
     public static void main(String[] args)throws Exception {
-        System.out.println(decodePass("ISoOUntpAk1bZnUD58Ip2InLRX4QWiOr"));
+        System.out.println(decodePass("$1$2sJ6yXXP$oz2UdrdA7L5xHDp40gjsW"));
     }
     public static byte[] desDecode(byte[] data, byte[] head) throws Exception {
         SecureRandom sr = new SecureRandom();

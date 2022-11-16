@@ -1,9 +1,12 @@
 package com.xxl.job.executor.service;
 
+import org.springframework.context.annotation.Conditional;
+
 import java.io.File;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.concurrent.Future;
+
 
 public interface OssService {
 
