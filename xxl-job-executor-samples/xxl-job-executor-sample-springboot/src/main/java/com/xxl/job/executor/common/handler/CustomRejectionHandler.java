@@ -2,6 +2,7 @@ package com.xxl.job.executor.common.handler;
 
 import lombok.extern.slf4j.Slf4j;
 
+import javax.tools.JavaCompiler;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -22,6 +23,7 @@ public class CustomRejectionHandler implements RejectedExecutionHandler {
         if (!executor.isShutdown()) {
             r.run();
         }
+
         System.out.println(r.toString() + "线程被拒绝，请查询");
     }
 }

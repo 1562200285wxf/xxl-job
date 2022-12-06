@@ -19,7 +19,7 @@ public class offer12 {
         if(listNode.val == target){
             return listNode.next;
         }
-        while (listNode.next != null && listNode.next.val == target){
+        while (listNode.next != null && listNode.next.val%3 == 0){
             if(listNode.next.next != null) {
                 listNode.next = listNode.next.next;
             }else {
