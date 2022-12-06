@@ -1,4 +1,4 @@
-package com.xxl.job.executor.study;
+package com.xxl.job.executor.study.exam;
 
 /**
  * @author ：wang xiaofeng
