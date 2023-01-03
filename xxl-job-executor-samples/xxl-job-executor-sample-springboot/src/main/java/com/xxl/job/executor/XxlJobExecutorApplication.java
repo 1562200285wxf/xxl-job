@@ -18,17 +18,7 @@ import java.util.List;
 public class XxlJobExecutorApplication {
 
 	public static void main(String[] args) {
-		ConfigurableApplicationContext applicationContext = SpringApplication.run(XxlJobExecutorApplication.class, args);
-		FileEncryptServiceImpl fileEncryptService = new FileEncryptServiceImpl();
-		//将三方实例对象注入到spring容器中--在对于层层递进的，
-		applicationContext.getBeanFactory().registerSingleton("fileEncryptService",fileEncryptService);
-
-		FileEncryptServiceImpl fileEncryptService1 = (FileEncryptServiceImpl)applicationContext.getBean("fileEncryptService");
-		System.out.println("111");
-
-		List<String> list =  new ArrayList<>()
-;
-	list.remove(3);
+		SpringApplication.run(XxlJobExecutorApplication.class, args);
 	}
 
 }
